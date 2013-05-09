@@ -132,7 +132,7 @@ $(document).ready(function(){
 			var firstNum=99999;
 			var goodOrder=true;
 			var lastYear=0;
-			$('#sortable1 > li').each(function()
+			$('#sortable1 li.card').each(function()
 			{
 				var num=$(this).data('index');
 				var year=parseInt($(this).data('card')[_YEAR]);
@@ -158,7 +158,7 @@ $(document).ready(function(){
 				{
 					// Reposition? //ui.item.insertAfter()
 				}
-				if ($('#sortable1 li').length>= DISPCARDS)
+				if ($('#sortable1 li.card').length>= DISPCARDS)
 				{	// Remove oldest card so we don't run out of room.
 					$(first).animate({top:'-250px'},250).queue(function() //.css({xposition:'absolute'})
 					{
@@ -255,12 +255,13 @@ function makeCard(card,index)
 	if (($handle = fopen($csv, "r")) !== FALSE)
 	{
 		$counter=-2;
-		while (($row = fgetcsv($handle, 1000, ",")) !== FALSE)
+		while (($row = fgetcsv($handle, 1000, ",",'"')) !== FALSE)
 		{
 			$counter++;
 			$year=$row[3];
 			if (intval($year)>0){
 				
+				//echo implode(",",$row)."\n";
 				/*$jsrow='';
 				for ($c=0; $c < count($row); $c++)
 				{
@@ -280,8 +281,11 @@ function makeCard(card,index)
 					case 'Justice':
 						$description=$text;
 						// Construct list of cases, since there may be 1, 2 or 3, add the LI tag only if there's actual case to avoid empty bullets.
-						$description.='<ul><li>'.$case1.' '.(($case2!='')?'<li>':'').$case2.' '.(($case3!='')?'<li>':'').$case3.'</ul>';
-						$description.='<p>Appointed by '.$president;
+						$description.='<ul><li>'.$case1.'</li>'
+							.(($case2!='')?'<li>'.$case2.'</li>':'')
+							.(($case3!='')?'<li>'.$case3.'</li>':'')
+							.'</ul>';
+						$description.='<p>Appointed by '.$president.'</p>';
 						$details='Served '.$year.'-'.$year2;
 						break;
 						
@@ -500,8 +504,9 @@ html, body {
 }
 #sortable1 {
 	top: 50px;
-	left: 20px;
-	right: 20px;
+	left: 10px;
+	right: 10px;
+	min-width: 1024px;
 }
 #sortable2 {
 	top: 330px;
