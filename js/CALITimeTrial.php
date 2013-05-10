@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.0.5
+	CALI Time Trial 1.0.6
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -18,7 +18,7 @@
 
 <script>
 // 2013-03-13 SJG
-// 2013-05-09
+// 2013-05-10
 
 var DISPCARDS= 5 ; // max cards on a row, more cards, harder
 var STACKCARDS = 10; // cards per stack, each new stack increases point value bonus
@@ -49,6 +49,70 @@ function reshuffle()
 	nextCard();
 }
 
+function trace(msg)
+{
+	if (typeof console!=='undefined') console.log(msg);
+}
+function revealCard($card)
+{	
+	$('.year',$card).html($card.data('card')[_YEAR]);
+	$('.info',$card).html($card.data('card')[_INFO]);
+}
+function gameOver()
+{
+	//gameOn=false;
+	alert("Congratulations! You've played all the cards.");
+	
+	reshuffle();
+	
+}
+function addStack()
+{
+	level += 1;
+	pointValue = level * 10 + .99;
+	
+	$('.stack').empty();
+	for (var c=0;c< STACKCARDS ;c++)
+	{
+		var $card=$('<li class="card back"></li>');
+		$card.css( {position:'absolute', left:c*4 ,top: -220 - c*5})
+		$('.stack').append($card);
+	}
+}
+function nextCard()
+{
+	ci++;
+	
+	if (ci>ncards)
+	{
+		gameOver();
+		return;
+	}
+	
+	makeCard(cards[ci],ci).css({xposition:'absolute',left:'-500px',top:'300px'}).addClass('zoomed').animate( {left:'0px',top:'0px'} ).appendTo('#sortable2').css(
+			{
+				position:'',left:'',top:''
+				//position:'relative',left:'0px',top:'0px'
+				});
+	
+	//$("#sortable1,#sortable2 li").addTouch();
+	//$('#sortable2').addClass('zoomed');
+	
+	$('.stack li:last').remove();
+	if ($('.stack li').length==0){addStack();}
+}
+function makeCard(card,index)
+{
+	var $card=$('<li class="card shadow"><div class=year/><div class=number/><div class=body><div class=title/><div class=description/><div class=info/></div></li>');
+	$('.number',$card).html(card[_NUM]);
+	$('.year',$card).html( 1 ? '?':card[1]);
+	$('.title',$card).html(card[2]);
+	$('.description',$card).html(card[3]);
+	$('.info',$card).html('?');
+	$card.data('card',card);	
+	$card.data('index',index);
+	return $card;
+}
 $(document).ready(function(){
 	
 	if (window.location.search=='?pool')
@@ -176,70 +240,6 @@ $(document).ready(function(){
 	
 	
 });
-function trace(msg)
-{
-	if (typeof console!=='undefined') console.log(msg);
-}
-function revealCard($card)
-{	
-	$('.year',$card).html($card.data('card')[_YEAR]);
-	$('.info',$card).html($card.data('card')[_INFO]);
-}
-function gameOver()
-{
-	//gameOn=false;
-	alert("Congratulations! You've played all the cards.");
-	
-	reshuffle();
-	
-}
-function addStack()
-{
-	level += 1;
-	pointValue = level * 10 + .99;
-	
-	$('.stack').empty();
-	for (var c=0;c< STACKCARDS ;c++)
-	{
-		var $card=$('<li class="card back"></li>');
-		$card.css( {position:'absolute', left:c*4 ,top: -220 - c*5})
-		$('.stack').append($card);
-	}
-}
-function nextCard()
-{
-	ci++;
-	
-	if (ci>ncards)
-	{
-		gameOver();
-		return;
-	}
-	
-	makeCard(cards[ci],ci).css({xposition:'absolute',left:'-500px',top:'300px'}).addClass('zoomed').animate( {left:'0px',top:'0px'} ).appendTo('#sortable2').css(
-			{
-				position:'',left:'',top:''
-				//position:'relative',left:'0px',top:'0px'
-				});
-	
-	//$("#sortable1,#sortable2 li").addTouch();
-	//$('#sortable2').addClass('zoomed');
-	
-	$('.stack li:last').remove();
-	if ($('.stack li').length==0){addStack();}
-}
-function makeCard(card,index)
-{
-	var $card=$('<li class="card shadow"><div class=year/><div class=number/><div class=body><div class=title/><div class=description/><div class=info/></div></li>');
-	$('.number',$card).html(card[_NUM]);
-	$('.year',$card).html( 1 ? '?':card[1]);
-	$('.title',$card).html(card[2]);
-	$('.description',$card).html(card[3]);
-	$('.info',$card).html('?');
-	$card.data('card',card);	
-	$card.data('index',index);
-	return $card;
-}
 <?php
 	// Load data from spreadsheet, ignore comment lines (non Year in first column) or any rows with any blank column.
 	// Stuff into a simple Javascript array of arrays. 
@@ -312,7 +312,7 @@ function makeCard(card,index)
 				
 				
 				$jsrow=json_encode($year).','.json_encode($title).','.json_encode($description).','.json_encode($details);
-				if ($jsdata!='') $jsdata.=",\n";
+				if ($jsdata!='') $jsdata.=", ";//",\n";
 				$jsdata.='['.$cardid.','.$jsrow."]";
 			}
 		}
@@ -598,7 +598,7 @@ html, body {
 }
 .card .number {
 	position: absolute;
-	color: #444;
+	color: #fff;
 	font-style: italic;
 	font-size: 10px;
 	top: 2px;
