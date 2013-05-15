@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.0.6
+	CALI Time Trial 1.0.7
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -45,6 +45,7 @@ function reshuffle()
 	$('#sortable1').empty();
 	var $card=makeCard(cards[ci],ci);
 	$('#sortable1').append($card);
+	fitCardText($card);
 	revealCard($card);
 	nextCard();
 }
@@ -89,17 +90,32 @@ function nextCard()
 		return;
 	}
 	
-	makeCard(cards[ci],ci).css({xposition:'absolute',left:'-500px',top:'300px'}).addClass('zoomed').animate( {left:'0px',top:'0px'} ).appendTo('#sortable2').css(
+	var $card=makeCard(cards[ci],ci).css({xposition:'absolute',left:'-500px',top:'300px'}).addClass('zoomed').animate( {left:'0px',top:'0px'} ).appendTo('#sortable2').css(
 			{
 				position:'',left:'',top:''
 				//position:'relative',left:'0px',top:'0px'
 				});
 	
+	fitCardText($card);
 	//$("#sortable1,#sortable2 li").addTouch();
 	//$('#sortable2').addClass('zoomed');
 	
 	$('.stack li:last').remove();
 	if ($('.stack li').length==0){addStack();}
+}
+
+function fitCardText($card)
+{	// Try different font sizes for description until we get one that fits nicely.
+	var $body = $('.body',$card);
+	var $desc = $('.description',$card);
+	var pointSize=12 +1;
+	var h;
+	do {
+		pointSize--;
+		$desc.css('font-size',pointSize+'pt');
+		h=$body.height();
+	} while (pointSize>=8 && h>200);
+	//$('.year',$card).append(','+h+","+pointSize); //DEBUG
 }
 function makeCard(card,index)
 {
@@ -109,6 +125,8 @@ function makeCard(card,index)
 	$('.title',$card).html(card[2]);
 	$('.description',$card).html(card[3]);
 	$('.info',$card).html('?');
+	
+	
 	$card.data('card',card);	
 	$card.data('index',index);
 	return $card;
@@ -284,8 +302,9 @@ $(document).ready(function(){
 						$description.='<ul><li>'.$case1.'</li>'
 							.(($case2!='')?'<li>'.$case2.'</li>':'')
 							.(($case3!='')?'<li>'.$case3.'</li>':'')
+							.'<li>Appointed by '.$president.'</li>'
 							.'</ul>';
-						$description.='<p>Appointed by '.$president.'</p>';
+						//$description.='<p>Appointed by '.$president.'</p>';
 						$details='Served '.$year.'-'.$year2;
 						break;
 						
@@ -355,6 +374,7 @@ function pool()
 		var row=Math.floor(c/COLS);
 		$card.css( {position:'absolute', left:(c % COLS)*190,top:row*200 + c*15 +140})
 		$('.pool').append($card);
+		fitCardText($card);
 	}
 }
 /**
@@ -376,7 +396,7 @@ html, body {
 	margin: 0px;
 	padding: 0px;
 	color: #fff;
-	font-family: "sans-serif, Arial, Verdana, Geneva";
+	font-family: "Times New Roman", Times, serif;
 	overflow: hidden;
 }
 .board {
@@ -535,7 +555,7 @@ html, body {
 	border-color: #000;
 	border-width: 1px;
 	border-style: solid;
-	padding: 5px;
+	padding: 0px;
 	margin: 5px;
 	color: #000;
 }
@@ -550,21 +570,26 @@ html, body {
 	background-color: #f88;
 }
 .card .year {
+	padding: 4px;
 	line-height: 1em;
-	color: #800;
+	color: #ab7c4f;
 	font-size: 22px;
 }
-.card .body {
-	line-height: 1em;
-	xbackground-color: #ffe;
-	height: 150px;
-	padding: 1px;
-}
 .card .title {
+	padding: 4px;
+	padding-bottom: 8px;
+	padding-left: 4px;
+	padding-top: 4px;
 	line-height: 1em;
-	color: #000;
-	font-style: italic;
+	color: #fff;
+	font-style: normal;
+	background-color: #ab7c4f;
 	font-size: 17px;
+}
+.card .body {
+	padding:2px;
+	line-height: 1em;
+	padding: 1px;
 }
 .card .description {
 	line-height: 1em;
@@ -572,19 +597,22 @@ html, body {
 	font-size: 12px;
 	padding-top: 4px;
 	padding-bottom: 4px;
+	padding-left: 4px;
+	padding-top: 4px;
 }
-.description * {
+.card .description * {
 	margin-top: 1px;
 	margin-bottom: 1px;
 	padding-top: 1px;
 	padding-bottom: 1px;
 }
-.description ul {
+.card .description ul {
 	padding-left: 2em;
-	font-size: smaller;
 }
-.description ul li {
+.card .description ul li {
+	font-size: smaller;
 	line-height: 1em;
+	color: #ab7c4f;
 }
 
 
