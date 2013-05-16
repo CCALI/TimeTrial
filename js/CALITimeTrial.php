@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.0.7
+	CALI Time Trial 1.0.8
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -25,12 +25,14 @@ var STACKCARDS = 10; // cards per stack, each new stack increases point value bo
 var played=1;// number of cards played
 var correct=1;// number of cards played correctly
 var score=10;// current score
+var hiscore=10;
 var level = 0;// current level
 var pointValue=0;// current card point value
 
 var ci=0;
 var _NUM=0;_YEAR=1;_INFO=4;
 var prevScore=0;
+var prevHiScore=0;
 var prevPointValue=0;
 var report="";
 var DEL=" &#9830; ";
@@ -131,11 +133,29 @@ function makeCard(card,index)
 	$card.data('index',index);
 	return $card;
 }
+
+function localGet(id,defVal)
+{
+	if (localStorage && localStorage.getItem(id))
+		return localStorage.getItem(id);
+	else
+		return defVal;
+}
+function localSet(id,val)
+{
+	if (localStorage)
+		if (val==null)
+			localStorage.removeItem(id);
+		else
+			localStorage.setItem(id,val);
+}
+
 $(document).ready(function(){
 	
 	if (window.location.search=='?pool')
 		{ pool();return; }
 	
+	hiscore=parseInt(localGet('hiscore',hiscore));
 	
 	setInterval(function(){
 		if (!gameOn) return;
@@ -145,11 +165,21 @@ $(document).ready(function(){
 				pointValue=1;
 			}
 		}
+		
+		
 		if (prevScore!=score)
 		{
-			prevScore = (score + prevScore) * .5;
-			$('#score').text(Math.round(prevScore));
+			prevScore += (score - prevScore) * .5;
+			$('#score').text( Math.round(prevScore) );
 		}
+			
+		if (prevHiScore != hiscore)
+		{
+			prevHiScore += (hiscore - prevHiScore) * .5;
+			$('#hiscore').text(Math.round(prevHiScore)); 
+		}
+		
+		
 		if (prevPointValue!=pointValue)
 		{
 			prevPointValue = (prevPointValue + pointValue) * .5;
@@ -166,27 +196,25 @@ $(document).ready(function(){
 	
 	$('#musicToggle').click(function(){
 		var music=$('#music')[0];
-		if (music.paused==false){
-			music.pause();
-			$('#musicToggle').removeClass('musicOn').addClass('musicOff');
-			if (localStorage)
+		if (music.play) {
+			if (music.paused==false)
 			{
-				localStorage.music=0;
+				music.pause();
+				$('#musicToggle').removeClass('musicOn').addClass('musicOff');
+				localSet('music',0);
 			}
-		}
-		else
-		{
-			music.play();
-			$('#musicToggle').removeClass('musicOff').addClass('musicOn');
-			if (localStorage){
-				localStorage.removeItem('music');
+			else
+			{
+				music.play();
+				$('#musicToggle').removeClass('musicOff').addClass('musicOn');
+				localSet('music',null);
 			}
 		}
 	});
-	if( localStorage && localStorage.music==0 ){
+	if( localGet('music',1)==0){//localStorage && localStorage.music && localStorage.music==0 ){
 		$('#music')[0].pause();
 		$('#musicToggle').removeClass('musicOn').addClass('musicOff');
-    }
+    } 
 	
 	$('#helpToggle').click(function(){
 		$('.help').fadeToggle();
@@ -233,7 +261,14 @@ $(document).ready(function(){
 				played++;
 				if (goodOrder)
 				{
-					score  += Math.floor(pointValue);
+					score  += Math.round(pointValue);
+					
+					if (score>hiscore) {
+						hiscore = score;
+						localSet('hiscore',hiscore);
+					} 
+		
+					
 					correct++;
 				}
 				else
@@ -439,6 +474,7 @@ html, body {
 	font-size: 35px;
 	font-weight: bold;
 	text-shadow: #000;
+	text-align:right;
 }
 .pulse {
 	color: yellow;
@@ -642,7 +678,7 @@ html, body {
 <body >
 	<div class="board"> 
 		<div class="logo">&nbsp;</div>
-		<div class="score">Score: <span id="score">0</span></div>
+		<div class="score">Score: <span id="score">.</span><br>High: <span id="hiscore">.</span></div>
 		<ul id="sortable1" class="connectedSortable"></ul>
 		<ul id="sortable2" class="connectedSortable"></ul>
 		<div class="stack"></div>
