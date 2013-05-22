@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.0.8
+	CALI Time Trial 1.0.8.1
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -24,8 +24,8 @@ var DISPCARDS= 5 ; // max cards on a row, more cards, harder
 var STACKCARDS = 10; // cards per stack, each new stack increases point value bonus
 var played=1;// number of cards played
 var correct=1;// number of cards played correctly
-var score=10;// current score
-var hiscore=10;
+var score=100;// current score
+var hiscore=score;
 var level = 0;// current level
 var pointValue=0;// current card point value
 
@@ -72,7 +72,7 @@ function gameOver()
 function addStack()
 {
 	level += 1;
-	pointValue = level * 10 + .99;
+	pointValue = level * 100 + .99;
 	
 	$('.stack').empty();
 	for (var c=0;c< STACKCARDS ;c++)
@@ -150,6 +150,42 @@ function localSet(id,val)
 			localStorage.setItem(id,val);
 }
 
+function interval()
+{
+	if (!gameOn) return;
+	if (pointValue>1) {
+		pointValue -= 0.1 * level;
+		if (pointValue<1) {
+			pointValue=1;
+		}
+	}
+	
+	
+	if (prevScore!=score)
+	{
+		prevScore += (score - prevScore) * .5;
+		$('#score').text( Math.round(prevScore) );
+	}
+		
+	if (prevHiScore != hiscore)
+	{
+		prevHiScore += (hiscore - prevHiScore) * .5;
+		$('#hiscore').text(Math.round(prevHiScore)); 
+	}
+	
+	
+	if (prevPointValue!=pointValue)
+	{
+		prevPointValue = (prevPointValue + pointValue) * .5;
+		$('#pointValue').html( 'Level: ' + level + '<br/>' + '+' + Math.floor(prevPointValue));
+	}
+	report1 = "Cards played: "+(played)+DEL+"Correctly positioned: "+(correct)+DEL+"Level:"+level+DEL+"Points: +"+Math.floor(pointValue)+DEL+"Cards left: "+(ncards-ci+1);
+	if (report1!=report){
+		report=report1;
+		$('#report').html(report);
+	}
+}
+
 $(document).ready(function(){
 	
 	if (window.location.search=='?pool')
@@ -157,40 +193,7 @@ $(document).ready(function(){
 	
 	hiscore=parseInt(localGet('hiscore',hiscore));
 	
-	setInterval(function(){
-		if (!gameOn) return;
-		if (pointValue>1) {
-			pointValue -= 0.01 * level;
-			if (pointValue<1) {
-				pointValue=1;
-			}
-		}
-		
-		
-		if (prevScore!=score)
-		{
-			prevScore += (score - prevScore) * .5;
-			$('#score').text( Math.round(prevScore) );
-		}
-			
-		if (prevHiScore != hiscore)
-		{
-			prevHiScore += (hiscore - prevHiScore) * .5;
-			$('#hiscore').text(Math.round(prevHiScore)); 
-		}
-		
-		
-		if (prevPointValue!=pointValue)
-		{
-			prevPointValue = (prevPointValue + pointValue) * .5;
-			$('#pointValue').html( 'Level: ' + level + '<br/>' + '+' + Math.floor(prevPointValue));
-		}
-		report1 = "Cards played: "+(played)+DEL+"Correctly positioned: "+(correct)+DEL+"Level:"+level+DEL+"Bonus: +"+Math.floor(pointValue)+DEL+"Cards left: "+(ncards-ci+1);
-		if (report1!=report){
-			report=report1;
-			$('#report').html(report);
-		}
-	},100);
+	setInterval(interval,100);
 
 	reshuffle();
 	
@@ -678,7 +681,7 @@ html, body {
 <body >
 	<div class="board"> 
 		<div class="logo">&nbsp;</div>
-		<div class="score">Score: <span id="score">.</span><br>High: <span id="hiscore">.</span></div>
+		<div class="score">Score: <span id="score">.</span><br>Hi Score: <span id="hiscore">.</span></div>
 		<ul id="sortable1" class="connectedSortable"></ul>
 		<ul id="sortable2" class="connectedSortable"></ul>
 		<div class="stack"></div>
