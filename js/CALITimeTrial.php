@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.0.8.1
+	CALI Time Trial 1.0.9.0
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -19,6 +19,7 @@
 <script>
 // 2013-03-13 SJG
 // 2013-05-10
+// 2013-06-07 QR code start mode
 
 var DISPCARDS= 5 ; // max cards on a row, more cards, harder
 var STACKCARDS = 10; // cards per stack, each new stack increases point value bonus
@@ -42,8 +43,19 @@ function reshuffle()
 {
 	ci=0;
 	shuffleArray(cards);
+	if (QRCodeCard>0)
+	{
+		for (var c=0;c<ncards;c++)
+			if (cards[c][0]==QRCodeCard)
+			{
+				var qrCard=cards[c];
+				cards[c]=cards[0];
+				cards[0]=qrCard;
+				break;
+			}
+	}
 	addStack();
-	ci++;
+	//ci++;
 	$('#sortable1').empty();
 	var $card=makeCard(cards[ci],ci);
 	$('#sortable1').append($card);
@@ -64,7 +76,7 @@ function revealCard($card)
 function gameOver()
 {
 	//gameOn=false;
-	alert("Congratulations! You've played all the cards.");
+	alert("Congratulations! You've played all the cards. \n We'll shuffle again and you can keep playing. ");
 	
 	reshuffle();
 	
@@ -86,7 +98,7 @@ function nextCard()
 {
 	ci++;
 	
-	if (ci>ncards)
+	if (ci>=ncards)
 	{
 		gameOver();
 		return;
@@ -99,8 +111,6 @@ function nextCard()
 				});
 	
 	fitCardText($card);
-	//$("#sortable1,#sortable2 li").addTouch();
-	//$('#sortable2').addClass('zoomed');
 	
 	$('.stack li:last').remove();
 	if ($('.stack li').length==0){addStack();}
@@ -179,7 +189,7 @@ function interval()
 		prevPointValue = (prevPointValue + pointValue) * .5;
 		$('#pointValue').html( 'Level: ' + level + '<br/>' + '+' + Math.floor(prevPointValue));
 	}
-	report1 = "Cards played: "+(played)+DEL+"Correctly positioned: "+(correct)+DEL+"Level:"+level+DEL+"Points: +"+Math.floor(pointValue)+DEL+"Cards left: "+(ncards-ci+1);
+	report1 = "Cards played: "+(played)+DEL+"Correctly positioned: "+(correct)+DEL+"Level:"+level+DEL+"Points: +"+Math.floor(pointValue)+DEL+"Cards left: "+(ncards-ci);
 	if (report1!=report){
 		report=report1;
 		$('#report').html(report);
@@ -191,6 +201,7 @@ $(document).ready(function(){
 	if (window.location.search=='?pool')
 		{ pool();return; }
 	
+	 
 	hiscore=parseInt(localGet('hiscore',hiscore));
 	
 	setInterval(interval,100);
@@ -296,6 +307,7 @@ $(document).ready(function(){
 	
 	
 });
+// Greetings, curious one. All the card info is right here in this giant JavaScript array. But there's also a source CSV file. If you want it just ask jmayer@cali.org.
 <?php
 	// Load data from spreadsheet, ignore comment lines (non Year in first column) or any rows with any blank column.
 	// Stuff into a simple Javascript array of arrays. 
@@ -314,6 +326,8 @@ $(document).ready(function(){
 		while (($row = fgetcsv($handle, 1000, ",",'"')) !== FALSE)
 		{
 			$counter++;
+			//if ($counter==10) break; Cheap way to test full deck to completion by making a small deck.
+			
 			$year=$row[3];
 			if (intval($year)>0){
 				
@@ -369,7 +383,7 @@ $(document).ready(function(){
 				
 				
 				$jsrow=json_encode($year).','.json_encode($title).','.json_encode($description).','.json_encode($details);
-				if ($jsdata!='') $jsdata.=", ";//",\n";
+				if ($jsdata!='') $jsdata.=",\n ";//",\n";
 				$jsdata.='['.$cardid.','.$jsrow."]";
 			}
 		}
@@ -392,10 +406,12 @@ $(document).ready(function(){
 			}
 		}
 	}
-	echo 'var cards=['.$jsdata.'];';
+	echo 'var cards=['.$jsdata."];\n";
+	
+	echo 'var QRCodeCard='.intval($_GET['card']).';';
 ?>
 
-var ncards=cards.length-1;
+var ncards=cards.length;
 
 function pool()
 {	// Show all cards - hope you're not cheating :)
