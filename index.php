@@ -70,7 +70,7 @@ $card = $_GET['card'];
   </div>
   <div class="container show-case-item">
     <h1> CALI Time Trial<br />
-      Becasuse sometimes you just need a break. </h1>
+      Because sometimes you just need a break. </h1>
     <p> CALI Time Trial is the card game that challenges your knowledge of legal history. Draw a card and fit it into the time line based on the
     information on the card. Sound easy? How much do you know about NLRB vs. Jones & Laughlin Steel Corp.?  </p>
     <a href="http://www.cali.org/register" class="bigbtn">Register Now!</a> <a href="http://www.cali.org/timetrial/online/CALITimeTrial.php?card=<?php echo $card; ?>" class="bigbtn">Play Online</a>
