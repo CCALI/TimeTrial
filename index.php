@@ -56,7 +56,7 @@ $card = $_GET['card'];
   <div class="container show-case-item">
     <h1> CALI Lessons<br />
       Hundreds of tutorials in dozens of legal topics </h1>
-    <p>Every day thousands of law students across the country run CALI Lessons to leanr more about the law. Do you?</p>
+    <p>Every day thousands of law students across the country run CALI Lessons to learn more about the law. Do you?</p>
     <a href="http://www.cali.org/register" class="bigbtn">Register Now!</a><a href="http://www.cali.org/lesson" class="bigbtn">Find Out More</a>
     <div class="clearfix"> </div>
   </div>
