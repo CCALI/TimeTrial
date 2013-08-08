@@ -1,6 +1,5 @@
 <?php
 $card = $_GET['card'];
-//echo "<h2> You requested card number ".$card.".</h2>";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,9 +11,11 @@ $card = $_GET['card'];
 <meta name="author" content="">
 <!-- Le styles -->
 <link href="assets/css/bootstrap.css" rel="stylesheet">
-<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 <link href="assets/css/docs.css" rel="stylesheet">
+<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
 <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+<script>document.cookie='resolution='+Math.max(screen.width,screen.height)+'; path=/';</script>
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
@@ -57,7 +58,7 @@ $card = $_GET['card'];
     <h1> CALI Lessons<br />
       Hundreds of tutorials in dozens of legal topics </h1>
     <p>Every day thousands of law students across the country run CALI Lessons to learn more about the law. Do you?</p>
-    <a href="http://www.cali.org/register" class="bigbtn">Register Now!</a><a href="http://www.cali.org/lesson" class="bigbtn">Find Out More</a>
+    <a href="http://www.cali.org/register" class="bigbtn">Register Now!</a> <a href="http://www.cali.org/lesson" class="bigbtn">Find Out More</a>
     <div class="clearfix"> </div>
   </div>
   <div class="container show-case-item">
@@ -97,9 +98,9 @@ $card = $_GET['card'];
         <h2> <span class="firstword">CALI</span> Lessons</h2>
         <p class="features">In the early 1980s, CALI set the precedent for creation and use of computer-assisted legal instruction exercises.
         CALI pioneered pre-packaged, interactive, computer-based legal education materials in text form with its CALI Lessons.
-        CALI Lessons are web-based tutorials on a variety of legal subjects known as CALI Lessons.
-        Currently there are over 950 lessons in over 35 law school subjects in CALI's library of lessons.
-        The lessons are free to all CALI member schools' students. </p>
+        Today's CALI Lessons are web-based tutorials covering a variety of legal topics.
+        Currently there are over 950 Lessons in over 35 law school topics in the CALI Lesson Library.
+        CALI Lessons are free to all students at CALI member schools. </p>
       </div>
       <div class="span4"> <img src="assets/img/think-creative.png" alt="eLangdell">
         <h2> <span class="firstword">CALI</span> eLangdell</h2>
@@ -110,7 +111,7 @@ $card = $_GET['card'];
         <h2> <span class="firstword">About</span> CALI</h2>
         <p> The Center for Computer-Assisted Legal Instruction, also known as CALI, is a 501(c)(3) non-profit consortium of mostly US law schools
         that conducts applied research and development in the area of computer-mediated legal education. The organization is best known in law schools
-        for CALI Lessons, online interactive tutorials in legal subjects, and CALI Excellence for the Future Awards (CALI Awards), given to the
+        for CALI Lessons, online interactive tutorials in legal subjects, and CALI Excellence for the Future Awards® (CALI Awards), given to the
         highest scorer in a law school course at many CALI member law schools. Nearly every US law school is a member of CALI.</p>
       </div>
     </div>
