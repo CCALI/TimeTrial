@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.0.9.0
+	CALI Time Trial 1.0.9.1
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -517,6 +517,11 @@ html, body {
 	text-align: center;
 	color: #ddd;
 }
+#musicCredit {
+	font-size: 12px;
+	text-align: center;
+	color: #fff;
+}
 #musicToggle {
 	position: fixed;
 	right: 3px;
@@ -714,6 +719,7 @@ html, body {
 	Shift it to the correct spot before placing the next card. The oldest played card will be discarded once there are five cards in play.
 	<P>You start with one card already revealed. Drag the card below to the left or right of the card above. 
 	Every ten cards you place increases your points per card, so keep playing.</p>
+		<div id="musicCredit">Music by Danielworldmusic LLC</div>
 </div>
 	</div>
 		<div class="pool"></div>
@@ -721,6 +727,5 @@ html, body {
 	<source  src="CALI_TimeTrial.mp3" type="audio/mpeg">
 	<source  src="CALI_TimeTrial.ogg" type="audio/ogg">
 </audio>
-
 </body>
 </html>
