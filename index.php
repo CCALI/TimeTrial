@@ -10,14 +10,15 @@ $card = $_GET['card'];
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/css/carousel.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+
 </head>
 <body>
-    <div class="navbar-wrapper">
+    <div class="navbar navbar-fixed-top">
       <div class="container">
-        <div class="navbar navbar-inverse navbar-static-top">
-          <div class="container">
+        <div class="navbar navbar-static-top">
+          
     	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
     	      <span class="icon-bar"></span>
     	      <span class="icon-bar"></span>
@@ -26,14 +27,14 @@ $card = $_GET['card'];
             <a class="navbar-brand" href="#">CALI Time Trial</a>
             <div class="nav-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="http://www.cali.org/">CALI</a> </li>
+                <li><a href="http://www.cali.org/">CALI</a> </li>
                 <li><a href="http://www.cali.org/lesson"> Lessons </a></li>
                 <li><a href="http://elangdell.cali.org/"> eLangdell </a></li>
                 <li><a href="http://www.cali.org/timetrial/online/CALITimeTrial.php"> Time Trial </a></li>
                 <li><a href="http://spotlight.cali.org/"> Blog </b></a></li>
               </ul>
             </div>
-          </div>
+
         </div>
       </div>
     </div>
@@ -49,7 +50,10 @@ $card = $_GET['card'];
       </ol>
       <div class="carousel-inner">
         <div class="item active">
-          <img src="assets/img/CALILessons-bg.jpg" alt="Banner" />
+            <img class="carousel-bg" src="assets/img/TTbackground.jpg" alt="Banner" />
+          <div class="carousel-banner">
+                 <a href="http://www.cali.org/timetrial/online/CALITimeTrial.php?card=<?php echo $card; ?>"><img src="assets/img/NewTimeTrialBannerScale.jpg" alt="Banner" /></a>
+            </div>
           <div class="container">
             <div class="carousel-caption">
               <h1> CALI Lessons<br />
@@ -60,7 +64,10 @@ $card = $_GET['card'];
           </div>
         </div>
         <div class="item">
-          <img src="assets/img/CALIeLangdell-bg.jpg" alt="Banner" />
+          <img class="carousel-bg" src="assets/img/TTbackground.jpg" alt="Banner" />
+         <div class="carousel-banner">
+                  <a href="http://www.cali.org/timetrial/online/CALITimeTrial.php?card=<?php echo $card; ?>"><img src="assets/img/NewTimeTrialBannerScale.jpg" alt="Banner" /></a>
+            </div>
           <div class="container">
             <div class="carousel-caption">
               <h1>CALI eLangedll<br />
@@ -72,13 +79,16 @@ $card = $_GET['card'];
           </div>
         </div>
         <div class="item">
-          <img src="assets/img/CALITimeTrialBG.jpg" alt="Banner" />
+          <img class="carousel-bg" src="assets/img/TTbackground.jpg" alt="Banner" />
+          <div class="carousel-banner">
+                  <a href="http://www.cali.org/timetrial/online/CALITimeTrial.php?card=<?php echo $card; ?>"><img src="assets/img/NewTimeTrialBannerScale.jpg" alt="Banner" /></a>
+            </div>
           <div class="container">
             <div class="carousel-caption">
               <h1> CALI Time Trial<br />
                   Because sometimes you just need a break. </h1>
               <p> CALI Time Trial is the card game that challenges your knowledge of legal history. Draw a card and fit it into the time line based on the
-                  information on the card. Sound easy? How much do you know about NLRB vs. Jones & Laughlin Steel Corp.?  </p>
+                  information on the card. How much do you know about NLRB vs. Jones & Laughlin Steel Corp.?  </p>
               <p><a class="btn btn-large btn-primary" href="http://www.cali.org/timetrial/online/CALITimeTrial.php?card=<?php echo $card; ?>">Play Now!</a></p>
             </div>
           </div>
@@ -165,6 +175,7 @@ $card = $_GET['card'];
 
 <!-- Placed at the end of the document so the pages load faster --> 
 <script src="http://code.jquery.com/jquery.js"></script>
+</script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
 
