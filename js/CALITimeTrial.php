@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.1.0.0
+	CALI Time Trial 1.1.0.1
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -754,42 +754,65 @@ html, body {
 label, input[type=checkbox] {
 	cursor: pointer;
 }
+
+.save {
+	position: absolute;
+	bottom: 10px;
+	right: 0px;
+	z-index:999;
+	height: 32px;
+}
 </style>
 </head>
 <body >
-	<div class="board"> 
-		<div class="logo">&nbsp;</div>
-		<div class="score">Score: <span id="score">.</span><br>Hi Score: <span id="hiscore">.</span><br>
-		<div class="leaderboard">
-			<span id="leaderboard">
-				<table><tr><th>Rank</th><th>Score</th><th>Player</th></tr>
-				</table>
-			</span>
-			<br/>
+	
+<div class="board">
+	<div class="logo">&nbsp;</div>
+	<div class="score">Score: <span id="score">.</span><br>
+		Hi Score: <span id="hiscore">.</span><br>
+		<div class="leaderboard"> <span id="leaderboard">
+			<table>
+				<tr>
+					<th>Rank</th>
+					<th>Score</th>
+					<th>Player</th>
+				</tr>
+			</table>
+			</span> <br/>
 			<div class="save">
-				<div class="signedout">Want to share your score? You'll need to <a href="http://www.cali.org/user">login</a>!</div>
-				<div class="signedin"><input id="savecb" type=checkbox checked=true/><label for="savecb">Save my score</label></input> <label for="savenick">as </label><input placeholder="Anonymous"  id="savenick" type="text" maxlength="12" size="12" /></div>
-			</div></div></div>
-		<ul id="sortable1" class="connectedSortable"></ul>
-		<ul id="sortable2" class="connectedSortable"></ul>
-		<div class="stack"></div>
-		<div id="pointValue"></div>
-		<div id="report"></div>
-		<div id="helpToggle">?</div>
-		<img id="musicToggle" class="musicOn"></img>
-<div class="help"><div class="close">X</div>
-	<P>Each card represents a significant case, amendment or Supreme Court Justice.
-	From the clues on the card determine the year of the case or the year the Justice was first appointed.</P>
-	<p>Put the cards into ascending date order from left to right by dragging and dropping them to the left, right or between the cards in the top row.
-	</p>
-	<p>If a card turns red you've put it in the wrong spot.
-	Shift it to the correct spot before placing the next card. The oldest played card will be discarded once there are five cards in play.
-	<P>You start with one card already revealed. Drag the card below to the left or right of the card above. 
-	Every ten cards you place increases your points per card, so keep playing.</p>
-		<div id="musicCredit" title="Hour Glass">Music by Danielworldmusic LLC</div>
-</div>
+				<div class="signedout">If you want to share your scores you'll need to <a href="http://www.cali.org/user/login?destination=timetrial/online/CALITimeTrial.php">login</a> and start over.</div>
+				<div class="signedin">
+					<input id="savecb" type=checkbox checked=true/>
+					<label for="savecb">Save my score</label>
+					</input>
+					<label for="savenick">as </label>
+					<input placeholder="Anonymous"  id="savenick" type="text" maxlength="12" size="12" />
+				</div>
+			</div>
+		</div>
 	</div>
-		<div class="pool"></div>
+	<ul id="sortable1" class="connectedSortable">
+	</ul>
+	<ul id="sortable2" class="connectedSortable">
+	</ul>
+	<div class="stack"></div>
+	<div id="pointValue"></div>
+	<div id="report"></div>
+	<div id="helpToggle">?</div>
+	<img id="musicToggle" class="musicOn"></img>
+	<div class="help">
+		<div class="close">X</div>
+		<P>Each card represents a significant case, amendment or Supreme Court Justice.
+			From the clues on the card determine the year of the case or the year the Justice was first appointed.</P>
+		<p>Put the cards into ascending date order from left to right by dragging and dropping them to the left, right or between the cards in the top row. </p>
+		<p>If a card turns red you've put it in the wrong spot.
+			Shift it to the correct spot before placing the next card. The oldest played card will be discarded once there are five cards in play.
+		<P>You start with one card already revealed. Drag the card below to the left or right of the card above. 
+			Every ten cards you place increases your points per card, so keep playing.</p>
+		<div id="musicCredit" title="Hour Glass">Music by Danielworldmusic LLC</div>
+	</div>
+</div>
+<div class="pool"></div>
 <audio id="music"  autoplay loop>
 	<source  src="CALI_TimeTrial.mp3" type="audio/mpeg">
 	<source  src="CALI_TimeTrial.ogg" type="audio/ogg">
