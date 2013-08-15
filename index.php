@@ -10,8 +10,9 @@ $card = $_GET['card'];
 <meta name="description" content="">
 <meta name="author" content="">
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="assets/css/carousel.css">
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap-glyphicons.css">
+<link rel="stylesheet" href="assets/css/carousel.css">
 
 </head>
 <body>
@@ -50,13 +51,13 @@ $card = $_GET['card'];
       </ol>
       <div class="carousel-inner">
         <div class="item active">
-            <img class="carousel-bg" src="assets/img/TTbackground.jpg" alt="Banner" />
+           
           <div class="carousel-banner">
-                 <a href="http://www.cali.org/timetrial/online/CALITimeTrial.php?card=<?php echo $card; ?>"><img src="assets/img/NewTimeTrialBannerScale.jpg" alt="Banner" /></a>
+                 <a href="http://www.cali.org/timetrial/online/CALITimeTrial.php?card=<?php echo $card; ?>"><img class="img-responsive" src="assets/img/TTbanner.jpg" alt="Banner" /></a>
             </div>
           <div class="container">
             <div class="carousel-caption">
-              <h1> CALI Lessons<br />
+              <h1> CALI<sup>&reg;</sup> Lessons<br />
                   Hundreds of tutorials in dozens of legal topics </h1>
               <p>Every day thousands of law students across the country run CALI Lessons to learn more about the law. Do you?</p>
               <p><a class="btn btn-large btn-primary" href="http://www.cali.org/register">Register Now!</a></p>
@@ -64,13 +65,13 @@ $card = $_GET['card'];
           </div>
         </div>
         <div class="item">
-          <img class="carousel-bg" src="assets/img/TTbackground.jpg" alt="Banner" />
+          
          <div class="carousel-banner">
-                  <a href="http://www.cali.org/timetrial/online/CALITimeTrial.php?card=<?php echo $card; ?>"><img src="assets/img/NewTimeTrialBannerScale.jpg" alt="Banner" /></a>
+                  <a href="http://www.cali.org/timetrial/online/CALITimeTrial.php?card=<?php echo $card; ?>"><img class="img-responsive" src="assets/img/TTbanner.jpg" alt="Banner" /></a>
             </div>
           <div class="container">
             <div class="carousel-caption">
-              <h1>CALI eLangedll<br />
+              <h1>CALI eLangdell<sup>&reg;</sup><br />
                   Free casebooks and supplements</h1>
               <p> CALI fights the high cost of casebooks with eLangdell Press: free casebooks, statutory
                   and regulatory supplements. eLangdell titles are available in a number of popular electronic formats.</p>
@@ -79,13 +80,13 @@ $card = $_GET['card'];
           </div>
         </div>
         <div class="item">
-          <img class="carousel-bg" src="assets/img/TTbackground.jpg" alt="Banner" />
+          
           <div class="carousel-banner">
-                  <a href="http://www.cali.org/timetrial/online/CALITimeTrial.php?card=<?php echo $card; ?>"><img src="assets/img/NewTimeTrialBannerScale.jpg" alt="Banner" /></a>
+                  <a href="http://www.cali.org/timetrial/online/CALITimeTrial.php?card=<?php echo $card; ?>"><img class="img-responsive" src="assets/img/TTbanner.jpg" alt="Banner" /></a>
             </div>
           <div class="container">
             <div class="carousel-caption">
-              <h1> CALI Time Trial<br />
+              <h1> CALI<sup>&reg;</sup> Time Trial<br />
                   Because sometimes you just need a break. </h1>
               <p> CALI Time Trial is the card game that challenges your knowledge of legal history. Draw a card and fit it into the time line based on the
                   information on the card. How much do you know about NLRB vs. Jones & Laughlin Steel Corp.?  </p>
@@ -110,7 +111,7 @@ $card = $_GET['card'];
             <hr class="soften">
       </div>
     <div class="row">
-      <div class="col-lg-4"> <img src="assets/img/responsive.png" alt="Lessons">
+      <div class="col-lg-4"> <img class="img-responsive" src="assets/img/Lessons_Icon_Color.png" alt="Lessons">
         <h2>CALI Lessons</h2>
         <p class="features">In the early 1980s, CALI set the precedent for creation and use of computer-assisted legal instruction exercises.
         CALI pioneered pre-packaged, interactive, computer-based legal education materials in text form with its CALI Lessons.
@@ -118,12 +119,12 @@ $card = $_GET['card'];
         Currently there are over 950 Lessons in over 35 law school topics in the CALI Lesson Library.
         CALI Lessons are free to all students at CALI member schools. </p>
       </div>
-      <div class="col-lg-4"> <img src="assets/img/think-creative.png" alt="eLangdell">
+      <div class="col-lg-4"> <img class="img-responsive" src="assets/img/eLangdell_Icon_Color.png" alt="eLangdell">
         <h2>CALI eLangdell</h2>
         <p> CALI's eLangdell® Press offers free legal casebooks, supplements, and chapters. eLangdell content has a
         nonrestrictive license that allows for free digital and e-book downloads, cheap printing, and easy editing.</p>
       </div>
-      <div class="col-lg-4"> <img src="assets/img/core-values.png" alt="About">
+      <div class="col-lg-4"> <img class="img-responsive" src="assets/img/logo_box_green.jpg" alt="About">
         <h2>About CALI</h2>
         <p> The Center for Computer-Assisted Legal Instruction, also known as CALI, is a 501(c)(3) non-profit consortium of mostly US law schools
         that conducts applied research and development in the area of computer-mediated legal education. The organization is best known in law schools
@@ -131,13 +132,13 @@ $card = $_GET['card'];
         highest scorer in a law school course at many CALI member law schools. Nearly every US law school is a member of CALI.</p>
       </div>
     </div>
-    <hr class="soften">
+    
     
   
 </div>
 <!-- Footer
     ================================================== -->
-<footer>
+<footer id="footer">
   <div class="container">
     <div class="row">
       <div class="col-lg-4">
@@ -159,16 +160,15 @@ $card = $_GET['card'];
         </ul>
       </div>
       <div class="col-lg-4">
-        <h4>Something from Flickr</h4>
+        <h4>CALI Images from Flickr</h4>
         <div id="flickr-wrapper"> 
           <script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?show_name=1&count=5&display=random&size=s&layout=x&source=user_set&user=63316539%40N03&set=72157626854399746&context=in%2Fset-72157626854399746%2F"></script> 
         </div>
       </div>
       
     </div>
-    <hr class="soften1 copyhr">
     <div class="row-fluid copyright">
-      <div class="span12">Copyright &copy; 2012. CALI</div>
+      <div class="span12">Copyright &copy; 2013 Center for Computer-Assisted Legal Instruction</div>
     </div>
   </div>
 </footer>
