@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.0.9.1
+	CALI Time Trial 1.1.0.1
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -20,6 +20,7 @@
 // 2013-03-13 SJG
 // 2013-05-10
 // 2013-06-07 QR code start mode
+// 2013-08-08 Leaderboard
 
 var DISPCARDS= 5 ; // max cards on a row, more cards, harder
 var STACKCARDS = 10; // cards per stack, each new stack increases point value bonus
@@ -29,6 +30,7 @@ var score=100;// current score
 var hiscore=score;
 var level = 0;// current level
 var pointValue=0;// current card point value
+var uid=0; // user id
 
 var ci=0;
 var _NUM=0;_YEAR=1;_INFO=4;
@@ -39,161 +41,15 @@ var report="";
 var DEL=" &#9830; ";
 var gameOn=true;
 
-function reshuffle()
-{
-	ci=0;
-	shuffleArray(cards);
-	if (QRCodeCard>0)
-	{
-		for (var c=0;c<ncards;c++)
-			if (cards[c][0]==QRCodeCard)
-			{
-				var qrCard=cards[c];
-				cards[c]=cards[0];
-				cards[0]=qrCard;
-				break;
-			}
-	}
-	addStack();
-	//ci++;
-	$('#sortable1').empty();
-	var $card=makeCard(cards[ci],ci);
-	$('#sortable1').append($card);
-	fitCardText($card);
-	revealCard($card);
-	nextCard();
-}
-
-function trace(msg)
-{
-	if (typeof console!=='undefined') console.log(msg);
-}
-function revealCard($card)
-{	
-	$('.year',$card).html($card.data('card')[_YEAR]);
-	$('.info',$card).html($card.data('card')[_INFO]);
-}
-function gameOver()
-{
-	//gameOn=false;
-	alert("Congratulations! You've played all the cards. \n We'll shuffle again and you can keep playing. ");
-	
-	reshuffle();
-	
-}
-function addStack()
-{
-	level += 1;
-	pointValue = level * 100 + .99;
-	
-	$('.stack').empty();
-	for (var c=0;c< STACKCARDS ;c++)
-	{
-		var $card=$('<li class="card back"></li>');
-		$card.css( {position:'absolute', left:c*4 ,top: -220 - c*5})
-		$('.stack').append($card);
-	}
-}
-function nextCard()
-{
-	ci++;
-	
-	if (ci>=ncards)
-	{
-		gameOver();
-		return;
-	}
-	
-	var $card=makeCard(cards[ci],ci).css({xposition:'absolute',left:'-500px',top:'300px'}).addClass('zoomed').animate( {left:'0px',top:'0px'} ).appendTo('#sortable2').css(
-			{
-				position:'',left:'',top:''
-				//position:'relative',left:'0px',top:'0px'
-				});
-	
-	fitCardText($card);
-	
-	$('.stack li:last').remove();
-	if ($('.stack li').length==0){addStack();}
-}
-
-function fitCardText($card)
-{	// Try different font sizes for description until we get one that fits nicely.
-	var $body = $('.body',$card);
-	var $desc = $('.description',$card);
-	var pointSize=12 +1;
-	var h;
-	do {
-		pointSize--;
-		$desc.css('font-size',pointSize+'pt');
-		h=$body.height();
-	} while (pointSize>=8 && h>200);
-	//$('.year',$card).append(','+h+","+pointSize); //DEBUG
-}
-function makeCard(card,index)
-{
-	var $card=$('<li class="card shadow"><div class=year/><div class=number/><div class=body><div class=title/><div class=description/><div class=info/></div></li>');
-	$('.number',$card).html(card[_NUM]);
-	$('.year',$card).html( 1 ? '?':card[1]);
-	$('.title',$card).html(card[2]);
-	$('.description',$card).html(card[3]);
-	$('.info',$card).html('?');
-	
-	
-	$card.data('card',card);	
-	$card.data('index',index);
-	return $card;
-}
-
-function localGet(id,defVal)
-{
-	if (localStorage && localStorage.getItem(id))
-		return localStorage.getItem(id);
-	else
-		return defVal;
-}
-function localSet(id,val)
-{
-	if (localStorage)
-		if (val==null)
-			localStorage.removeItem(id);
-		else
-			localStorage.setItem(id,val);
-}
-
-function interval()
-{
-	if (!gameOn) return;
-	if (pointValue>1) {
-		pointValue -= 0.1 * level;
-		if (pointValue<1) {
-			pointValue=1;
-		}
-	}
-	
-	
-	if (prevScore!=score)
-	{
-		prevScore += (score - prevScore) * .5;
-		$('#score').text( Math.round(prevScore) );
-	}
-		
-	if (prevHiScore != hiscore)
-	{
-		prevHiScore += (hiscore - prevHiScore) * .5;
-		$('#hiscore').text(Math.round(prevHiScore)); 
-	}
-	
-	
-	if (prevPointValue!=pointValue)
-	{
-		prevPointValue = (prevPointValue + pointValue) * .5;
-		$('#pointValue').html( 'Level: ' + level + '<br/>' + '+' + Math.floor(prevPointValue));
-	}
-	report1 = "Cards played: "+(played)+DEL+"Correctly positioned: "+(correct)+DEL+"Level:"+level+DEL+"Points: +"+Math.floor(pointValue)+DEL+"Cards left: "+(ncards-ci);
-	if (report1!=report){
-		report=report1;
-		$('#report').html(report);
-	}
+function getLeaderBoard() {
+	var lburl='CALITimeTrial_WS.php?'
+		+'u&l&s='+score+'&p&'+ ($('#savecb')[0].checked?'r':'')+'&n='+escape($('#savenick').val());
+	console.log(lburl);
+	$('#leaderboard').load(lburl, function() {
+		uid = $('#leaderboard table').attr('uid');
+		$('.signedin').toggle(uid>0);
+		$('.signedout').toggle(uid==0);
+	});
 }
 
 $(document).ready(function(){
@@ -207,6 +63,16 @@ $(document).ready(function(){
 	setInterval(interval,100);
 
 	reshuffle();
+	
+	getLeaderBoard();
+	$('#leaderboard').click(function(){
+		$('#leaderboard table').fadeOut(1);
+		getLeaderBoard();
+	});
+	
+	$('#savecb').click(function(){
+		$('.savename').toggle($('#savecb')[0].checked);
+	});
 	
 	$('#musicToggle').click(function(){
 		var music=$('#music')[0];
@@ -307,6 +173,173 @@ $(document).ready(function(){
 	
 	
 });
+
+
+
+function numberWithCommas(x) {//http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function reshuffle()
+{
+	ci=0;
+	shuffleArray(cards);
+	if (QRCodeCard>0)
+	{
+		for (var c=0;c<ncards;c++)
+			if (cards[c][0]==QRCodeCard)
+			{
+				var qrCard=cards[c];
+				cards[c]=cards[0];
+				cards[0]=qrCard;
+				break;
+			}
+	}
+	addStack();
+	//ci++;
+	$('#sortable1').empty();
+	var $card=makeCard(cards[ci],ci);
+	$('#sortable1').append($card);
+	fitCardText($card);
+	revealCard($card);
+	nextCard();
+}
+
+function trace(msg)
+{
+	if (typeof console!=='undefined') console.log(msg);
+}
+function revealCard($card)
+{	
+	$('.year',$card).html($card.data('card')[_YEAR]);
+	$('.info',$card).html($card.data('card')[_INFO]);
+}
+function gameOver()
+{
+	//gameOn=false;
+	alert("Congratulations! You've played all the cards. \n We'll shuffle again and you can keep playing. ");
+	
+	reshuffle();
+	
+}
+function addStack()
+{
+	level += 1;
+	pointValue = level * 100 + .99;
+	
+	$('.stack').empty();
+	for (var c=0;c< STACKCARDS ;c++)
+	{
+		var $card=$('<li class="card back"></li>');
+		$card.css( {position:'absolute', left:c*4 ,top: -220 - c*5})
+		$('.stack').append($card);
+	}
+	
+	$('#leaderboard table').fadeTo(.5,.5);
+	getLeaderBoard();
+}
+function nextCard()
+{
+	ci++;
+	
+	if (ci>=ncards)
+	{
+		gameOver();
+		return;
+	}
+	
+	var $card=makeCard(cards[ci],ci).css({xposition:'absolute',left:'-500px',top:'300px'}).addClass('zoomed').animate( {left:'0px',top:'0px'} ).appendTo('#sortable2').css(
+			{
+				position:'',left:'',top:''
+				//position:'relative',left:'0px',top:'0px'
+				});
+	
+	fitCardText($card);
+	
+	$('.stack li:last').remove();
+	if ($('.stack li').length==0){addStack();}
+}
+
+function fitCardText($card)
+{	// Try different font sizes for description until we get one that fits nicely.
+	var $body = $('.body',$card);
+	var $desc = $('.description',$card);
+	var pointSize=12 +1;
+	var h;
+	do {
+		pointSize--;
+		$desc.css('font-size',pointSize+'pt');
+		h=$body.height();
+	} while (pointSize>=8 && h>200);
+	//$('.year',$card).append(','+h+","+pointSize); //DEBUG
+}
+function makeCard(card,index)
+{
+	var $card=$('<li class="card shadow"><div class=year/><div class=number/><div class=body><div class=title/><div class=description/><div class=info/></div></li>');
+	$('.number',$card).html(card[_NUM]);
+	$('.year',$card).html( 1 ? '?':card[1]);
+	$('.title',$card).html(card[2]);
+	$('.description',$card).html(card[3]);
+	$('.info',$card).html('?');
+	
+	
+	$card.data('card',card);	
+	$card.data('index',index);
+	return $card;
+}
+
+function localGet(id,defVal)
+{
+	if (localStorage && localStorage.getItem(id))
+		return localStorage.getItem(id);
+	else
+		return defVal;
+}
+function localSet(id,val)
+{
+	if (localStorage)
+		if (val==null)
+			localStorage.removeItem(id);
+		else
+			localStorage.setItem(id,val);
+}
+
+function interval()
+{
+	if (!gameOn) return;
+	if (pointValue>1) {
+		pointValue -= 0.1 * level;
+		if (pointValue<1) {
+			pointValue=1;
+		}
+	}
+	
+	
+	if (prevScore!=score)
+	{
+		prevScore += (score - prevScore) * .5;
+		$('#score').text( numberWithCommas(Math.round(prevScore)) );
+	}
+		
+	if (prevHiScore != hiscore)
+	{
+		prevHiScore += (hiscore - prevHiScore) * .5;
+		$('#hiscore').text(numberWithCommas(Math.round(prevHiScore))); 
+	}
+	
+	
+	if (prevPointValue!=pointValue)
+	{
+		prevPointValue = (prevPointValue + pointValue) * .5;
+		$('#pointValue').html( 'Level: ' + level + '<br/>' + '+' + numberWithCommas(Math.floor(prevPointValue)));
+	}
+	report1 = "Cards played: "+(played)+DEL+"Correctly positioned: "+(correct)+DEL+"Level:"+level+DEL+"Points: +"+numberWithCommas(Math.floor(pointValue))+DEL+"Cards left: "+(ncards-ci);
+	if (report1!=report){
+		report=report1;
+		$('#report').html(report);
+	}
+}
+
 // Greetings, curious one. All the card info is right here in this giant JavaScript array. But there's also a source CSV file. If you want it just ask jmayer@cali.org.
 <?php
 	// Load data from spreadsheet, ignore comment lines (non Year in first column) or any rows with any blank column.
@@ -486,15 +519,6 @@ html, body {
 	left:10px;
 	top:2px;
 }
-.score {
-	position: absolute;
-	right: 10px;
-	top:2px;
-	font-size: 35px;
-	font-weight: bold;
-	text-shadow: #000;
-	text-align:right;
-}
 .pulse {
 	color: yellow;
 	font-size: 135px;
@@ -516,6 +540,7 @@ html, body {
 	font-size: 12px;
 	text-align: center;
 	color: #ddd;
+	text-shadow: 1px 1px #000;
 }
 #musicCredit {
 	font-size: 12px;
@@ -674,8 +699,6 @@ html, body {
 	line-height: 1em;
 	color: #ab7c4f;
 }
-
-
 .card .info {
 	line-height: 1em;
 	position: absolute;
@@ -697,32 +720,99 @@ html, body {
 	-webkit-box-shadow: 3px 3px 4px #000;
 	box-shadow: 3px 3px 4px #000;
 }
+
+
+.score {
+	position: absolute;
+	right: 10px;
+	/*top:2px;*/
+	bottom: 50px;
+	font-size: 35px;
+	font-weight: bold;
+	text-shadow: 2px 2px #000;
+	text-align:right;
+}
+.leaderboard {
+	text-shadow: 1px 1px #000;
+}
+.score table {
+	width: 100%;
+   background-color: rgba(0,0,0,.2);
+}
+.signedout {
+	width: 100%;
+	font-size: 15px;
+   background-color: rgba(255,255,255,.2);
+	padding: 5px;
+}
+.score table *,.score .save * {
+	font-size: 12px;
+}
+.score table tr:first-child {
+   background-color: rgba(0,0,0,.3);
+}
+label, input[type=checkbox] {
+	cursor: pointer;
+}
+
+.save {
+	position: absolute;
+	bottom: 10px;
+	right: 0px;
+	z-index:999;
+	height: 32px;
+}
 </style>
 </head>
 <body >
-	<div class="board"> 
-		<div class="logo">&nbsp;</div>
-		<div class="score">Score: <span id="score">.</span><br>Hi Score: <span id="hiscore">.</span></div>
-		<ul id="sortable1" class="connectedSortable"></ul>
-		<ul id="sortable2" class="connectedSortable"></ul>
-		<div class="stack"></div>
-		<div id="pointValue"></div>
-		<div id="report"></div>
-		<div id="helpToggle">?</div>
-		<img id="musicToggle" class="musicOn"></img>
-<div class="help"><div class="close">X</div>
-	<P>Each card represents a significant case, amendment or Supreme Court Justice.
-	From the clues on the card determine the year of the case or the year the Justice was first appointed.</P>
-	<p>Put the cards into ascending date order from left to right by dragging and dropping them to the left, right or between the cards in the top row.
-	</p>
-	<p>If a card turns red you've put it in the wrong spot.
-	Shift it to the correct spot before placing the next card. The oldest played card will be discarded once there are five cards in play.
-	<P>You start with one card already revealed. Drag the card below to the left or right of the card above. 
-	Every ten cards you place increases your points per card, so keep playing.</p>
-		<div id="musicCredit">Music by Danielworldmusic LLC</div>
-</div>
+	
+<div class="board">
+	<div class="logo">&nbsp;</div>
+	<div class="score">Score: <span id="score">.</span><br>
+		Hi Score: <span id="hiscore">.</span><br>
+		<div class="leaderboard"> <span id="leaderboard">
+			<table>
+				<tr>
+					<th>Rank</th>
+					<th>Score</th>
+					<th>Player</th>
+				</tr>
+			</table>
+			</span> <br/>
+			<div class="save">
+				<div class="signedout">If you want to share your scores you'll need to <a href="http://www.cali.org/user/login?destination=timetrial/online/CALITimeTrial.php">login</a> and start over.</div>
+				<div class="signedin">
+					<input id="savecb" type=checkbox checked=true/>
+					<label for="savecb">Save my score</label>
+					</input>
+					<label for="savenick">as </label>
+					<input placeholder="Anonymous"  id="savenick" type="text" maxlength="12" size="12" />
+				</div>
+			</div>
+		</div>
 	</div>
-		<div class="pool"></div>
+	<ul id="sortable1" class="connectedSortable">
+	</ul>
+	<ul id="sortable2" class="connectedSortable">
+	</ul>
+	<div class="stack"></div>
+	<div id="pointValue"></div>
+	<div id="report"></div>
+	<div id="helpToggle">?</div>
+	<img id="musicToggle" class="musicOn"></img>
+	<div class="help">
+		<div class="close">X</div>
+		<P>Each card represents a significant case, amendment or Supreme Court Justice.
+			From the clues on the card determine the year of the case or the year the Justice was first appointed.</P>
+		<p>Put the cards into ascending date order from left to right by dragging and dropping them to the left, right or between the cards in the top row. </p>
+		<p>If a card turns red you've put it in the wrong spot.
+			Shift it to the correct spot before placing the next card. The oldest played card will be discarded once there are five cards in play.
+		<P>You start with one card already revealed. Drag the card below to the left or right of the card above. 
+			Every ten cards you place increases your points per card, so keep playing.</p>
+		<div id="musicCredit" title="Hour Glass">Music by Danielworldmusic LLC</div>
+	</div>
+</div>
+<div class="pool"></div>
 <audio id="music"  autoplay loop>
 	<source  src="CALI_TimeTrial.mp3" type="audio/mpeg">
 	<source  src="CALI_TimeTrial.ogg" type="audio/ogg">
