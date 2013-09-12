@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.1.0.1
+	CALI Time Trial 1.1.0.2
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -359,9 +359,9 @@ function interval()
 		while (($row = fgetcsv($handle, 1000, ",",'"')) !== FALSE)
 		{
 			$counter++;
-			//if ($counter==10) break; Cheap way to test full deck to completion by making a small deck.
+			//if ($counter==20) break;// Cheap way to test full deck to completion by making a small deck.
 			
-			$year=$row[3];
+			$year=$row[ 4 ];
 			if (intval($year)>0){
 				
 				//echo implode(",",$row)."\n";
@@ -374,9 +374,17 @@ function interval()
 				if ($jsdata!='') $jsdata.=",\n";
 				*/
 				// Pluck out CSV data into friendly named variables.
-				$title=$row[0];$series=$row[1];$text=$row[2];$year2=$row[4];
-					$president=$row[5];$case1=$row[6];$case2=$row[7];$case3=$row[8];$citation=$row[9];
-					$cardid=$row[11];
+				$cardid=$row[0];
+				$title=htmlentities($row[1]);
+				$series=$row[2];
+				$text=htmlentities($row[3]);
+				$year2=$row[5];
+				$president=htmlentities($row[6]);
+				$case1=htmlentities($row[7]);
+				$case2=htmlentities($row[8]);
+				$case3=htmlentities($row[9]);
+				$citation=htmlentities($row[10]);
+					
 					
 				// Construct card-friendly data fields to stick into the JS data array.
 				// Yes I know a cheater can look at source and get the answers. :D
