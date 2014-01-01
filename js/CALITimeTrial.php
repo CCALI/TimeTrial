@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.1.0.3
+	CALI Time Trial 1.1.0.4
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -21,6 +21,7 @@
 // 2013-05-10
 // 2013-06-07 QR code start mode
 // 2013-08-08 Leaderboard
+// 2014-01-01 Loading 400 cards
 
 var DISPCARDS= 5 ; // max cards on a row, more cards, harder
 var STACKCARDS = 10; // cards per stack, each new stack increases point value bonus
@@ -347,7 +348,7 @@ function interval()
 	
 	if (1){
 		// Load from local test file (for testing with fixed data set)
-		$csv="CALITimeTrialGameData.csv"; 	
+		$csv="CALITimeTrialGameData1-400.csv";//"CALITimeTrialGameData.csv"; 	
 	}else{
 		// Load data from google spreadsheet
 		//5/9/13 this format is now wrong: $csv="https://docs.google.com/spreadsheet/pub?key=0AkLP3h1Q8BaAdFd1QlNvSE9rZVhFY1QyV0J1RlRWUHc&single=true&gid=0&output=csv";
