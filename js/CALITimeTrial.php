@@ -523,7 +523,7 @@ html, body {
 	background-image: url('CALITimeTrialLogo.png');
 	background-size: contain;
 	position: absolute;
-	width: 350px;
+	width: 500px;
 	height: 40px;
 	left:10px;
 	top:2px;
