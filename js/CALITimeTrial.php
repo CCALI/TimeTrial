@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.1.0.4
+	CALI Time Trial 1.1.0.5
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -32,6 +32,7 @@ var hiscore=score;
 var level = 0;// current level
 var pointValue=0;// current card point value
 var uid=0; // user id
+var ncards;
 
 var ci=0;
 var _NUM=0;_YEAR=1;_INFO=4;
@@ -156,7 +157,7 @@ $(document).ready(function(){
 				{
 					// Reposition? //ui.item.insertAfter()
 				}
-				if ($('#sortable1 li.card').length>= DISPCARDS)
+				if ($('#sortable1 li.card').length >= DISPCARDS)
 				{	// Remove oldest card so we don't run out of room.
 					$(first).animate({top:'-250px'},250).queue(function() //.css({xposition:'absolute'})
 					{
@@ -226,17 +227,17 @@ function gameOver()
 function addStack()
 {
 	level += 1;
-	pointValue = level * 100 + .99;
+	pointValue = level * 100 + 0.99;
 	
 	$('.stack').empty();
 	for (var c=0;c< STACKCARDS ;c++)
 	{
 		var $card=$('<li class="card back"></li>');
-		$card.css( {position:'absolute', left:c*4 ,top: -220 - c*5})
+		$card.css( {position:'absolute', left:c*4 ,top: -220 - c*5});
 		$('.stack').append($card);
 	}
 	
-	$('#leaderboard table').fadeTo(.5,.5);
+	$('#leaderboard table').fadeTo(0.5,0.5);
 	getLeaderBoard();
 }
 function nextCard()
@@ -253,7 +254,7 @@ function nextCard()
 			{
 				position:'',left:'',top:''
 				//position:'relative',left:'0px',top:'0px'
-				});
+			});
 	
 	fitCardText($card);
 	
@@ -291,26 +292,34 @@ function makeCard(card,index)
 
 function localGet(id,defVal)
 {
-	if (localStorage && localStorage.getItem(id))
+	if (localStorage && localStorage.getItem(id)){
 		return localStorage.getItem(id);
-	else
+	}
+	else{
 		return defVal;
+	}
 }
 function localSet(id,val)
 {
 	if (localStorage)
-		if (val==null)
+	{
+		if (val==null){
 			localStorage.removeItem(id);
-		else
+		}
+		else{
 			localStorage.setItem(id,val);
+		}
+	}
 }
 
 function interval()
 {
 	if (!gameOn) return;
-	if (pointValue>1) {
+	if (pointValue>1)
+	{
 		pointValue -= 0.1 * level;
-		if (pointValue<1) {
+		if (pointValue<1)
+		{
 			pointValue=1;
 		}
 	}
@@ -318,24 +327,25 @@ function interval()
 	
 	if (prevScore!=score)
 	{
-		prevScore += (score - prevScore) * .5;
+		prevScore += (score - prevScore) * 0.5;
 		$('#score').text( numberWithCommas(Math.round(prevScore)) );
 	}
 		
 	if (prevHiScore != hiscore)
 	{
-		prevHiScore += (hiscore - prevHiScore) * .5;
+		prevHiScore += (hiscore - prevHiScore) * 0.5;
 		$('#hiscore').text(numberWithCommas(Math.round(prevHiScore))); 
 	}
 	
 	
 	if (prevPointValue!=pointValue)
 	{
-		prevPointValue = (prevPointValue + pointValue) * .5;
+		prevPointValue = (prevPointValue + pointValue) * 0.5;
 		$('#pointValue').html( 'Level: ' + level + '<br/>' + '+' + numberWithCommas(Math.floor(prevPointValue)));
 	}
 	report1 = "Cards played: "+(played)+DEL+"Correctly positioned: "+(correct)+DEL+"Level:"+level+DEL+"Points: +"+numberWithCommas(Math.floor(pointValue))+DEL+"Cards left: "+(ncards-ci);
-	if (report1!=report){
+	if (report1!=report)
+	{
 		report=report1;
 		$('#report').html(report);
 	}
@@ -453,7 +463,7 @@ function interval()
 	echo 'var QRCodeCard='.intval($_GET['card']).';';
 ?>
 
-var ncards=cards.length;
+ncards=cards.length;
 
 function pool()
 {	// Show all cards - hope you're not cheating :)
@@ -468,7 +478,7 @@ function pool()
 		var $card = makeCard( cards[c % (ncards+1)],-1);
 		revealCard($card);
 		var row=Math.floor(c/COLS);
-		$card.css( {position:'absolute', left:(c % COLS)*190,top:row*200 + c*15 +140})
+		$card.css( {position:'absolute', left:(c % COLS)*190,top:row*200 + c*15 +140});
 		$('.pool').append($card);
 		fitCardText($card);
 	}
