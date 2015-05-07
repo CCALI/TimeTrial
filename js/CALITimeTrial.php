@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.1.0.5
+	CALI Time Trial 1.1.0.6
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,6 +22,7 @@
 // 2013-06-07 QR code start mode
 // 2013-08-08 Leaderboard
 // 2014-01-01 Loading 400 cards
+// 2015-05-07 Loading 600 cards
 
 var DISPCARDS= 5 ; // max cards on a row, more cards, harder
 var STACKCARDS = 10; // cards per stack, each new stack increases point value bonus
@@ -358,7 +359,7 @@ function interval()
 	
 	if (1){
 		// Load from local test file (for testing with fixed data set)
-		$csv="CALITimeTrialGameData1-400.csv";//"CALITimeTrialGameData.csv"; 	
+		$csv="CALITimeTrialGameData1-600.csv";//"CALITimeTrialGameData.csv"; 	
 	}else{
 		// Load data from google spreadsheet
 		//5/9/13 this format is now wrong: $csv="https://docs.google.com/spreadsheet/pub?key=0AkLP3h1Q8BaAdFd1QlNvSE9rZVhFY1QyV0J1RlRWUHc&single=true&gid=0&output=csv";
@@ -427,9 +428,30 @@ function interval()
 						$details=$title.' ('.$year.')'; 
 						break;
 					
+					case 'People':
+						$description=$text;
+						$details='';
+						$details.='Served '.$year.'-'.$year2;
+						break;
+										
+					case 'Documents': // Teatisses and documents treated same
+					case 'Treatises':
+						$description=$text;
+						$details='';
+						$details.=''.$year.($year2!='' ? '-'.$year2 : '');
+						$details.='   '.$citation; 
+						break;
+					 
+						
+					case 'Decades':
+						$description=$text;
+						$details='';
+						break;
+					
 					default:
 						$description=$text;
 						$details='';
+						echo "<h1>Unknown Series $series. }}}}";
 				}
 				//$cardid=$counter;
 				
@@ -482,6 +504,7 @@ function pool()
 		$('.pool').append($card);
 		fitCardText($card);
 	}
+	
 }
 /**
  * Randomize array element order in-place.
@@ -733,6 +756,9 @@ html, body {
 	font-size: 10px;
 	top: 2px;
 	right: 2px;
+}
+.pool li.card .number {
+	color: #800;	
 }
 .shadow {
 	-moz-box-shadow: 3px 3px 4px #000;
