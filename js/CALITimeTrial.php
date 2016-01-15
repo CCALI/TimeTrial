@@ -1,6 +1,6 @@
 <!DOCTYPE HTML >
 <!--
-	CALI Time Trial 1.1.0.6
+	CALI Time Trial 1.1.0.7
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -431,7 +431,7 @@ function interval()
 					case 'People':
 						$description=$text;
 						$details='';
-						$details.='Served '.$year.'-'.$year2;
+						$details.=' '.$year.'-'.$year2;// 2016-01-15 year1/year2 are born/death years, not Served as is for Justices.
 						break;
 										
 					case 'Documents': // Teatisses and documents treated same
@@ -454,7 +454,7 @@ function interval()
 						echo "<h1>Unknown Series $series. }}}}";
 				}
 				//$cardid=$counter;
-				
+
 				
 				$jsrow=json_encode($year).','.json_encode($title).','.json_encode($description).','.json_encode($details);
 				if ($jsdata!='') $jsdata.=",\n ";//",\n";
