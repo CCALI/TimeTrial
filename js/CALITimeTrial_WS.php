@@ -6,35 +6,18 @@
 	Get scores, position of user's score and user id
 	?cmd=scores&score=999
 	
-	
+	04/06/2018 Rolling 6 month high score.
 
 */
 
 	define('TOP_SCORES',5); // Number of top scores to show
 	define('NEAREST_SCORES',3); // Number of nearest scores to 'score'.
-	
+	define('SCORE_MONTHS' ,6);	// Only scores in past N months are included (current date - N months)
+			 
 	$result=array();
-	
-	// Configuration to run on local, development.cali.org and www.cali.org.
-	switch ($_SERVER["SERVER_NAME"])
-	{
-		case 'localhost':
-			define('DRUPAL_ROOT_DIR','/vol/data/acquia-drupal');
-			$mysqli = new mysqli("s","u","p","timetrial",3326);
-			unset($_REQUEST['u']);
-			$result['userid']=0;//203;
-			break;
-		case 'development.cali.org':
-			define('DRUPAL_ROOT_DIR','/vol/data/development/commons');
-			break;
-		default:
-			define('DRUPAL_ROOT_DIR','/vol/data/acquia-drupal');
-			$mysqli = new mysqli("s","u","p","timetrial");
-			break;
-	}
-	//var_dump($_SERVER);
-	//var_dump(DRUPAL_ROOT_DIR);
-	//var_dump($mysqli);
+	$result["ver"]="2017-06-05 10:34";
+	///error_reporting(E_ALL);
+	require "config.php";
 
 
 	// #############################################	
@@ -87,18 +70,24 @@
 	// #############################################	
 	if (isset($_REQUEST['l'])) // l)eader board scores
 	{	// Collect all scores since we want position and don't know where user's score fits.
-		$res=$mysqli->query("select score,nick from scores order by score desc");
+		//$res=$mysqli->query("select score,nick,timestamp from scores order by score desc");
+		$res=$mysqli->query('select score,nick,timestamp from scores  where timestamp >= now()-interval '.SCORE_MONTHS.' month order by score desc');
 		$pos=0;
 		while($row=$res->fetch_assoc())
 		{
 			$pos++;
-			$scores[]=array("pos"=>($pos), "show"=>($pos <=TOP_SCORES)?1:0,"score"=> $row['score'], "nick"=> $row['nick']);
+			$scores[]=array("pos"=>($pos), "show"=>($pos <=TOP_SCORES)?1:0,"score"=> $row['score'], "nick"=> $row['nick'],"when"=>$row['timestamp']);
 		}
-		
+		if (isset($_REQUEST['d']))
+		{
+			var_dump($res);
+			var_dump($scores);
+		}
 		// Show closest n scores to user's SCORE.
 		if ($score>0)
 		{	// e.g., SQL: select score  from scores  order by abs(score-100)  limit 5
-			$res=$mysqli->query('select score from scores order by abs(score-'.intval($score).') asc limit '.NEAREST_SCORES);
+			//$res=$mysqli->query('select score from scores order by abs(score-'.intval($score).') asc limit '.NEAREST_SCORES);
+			$res=$mysqli->query('select score from scores where timestamp >= now()-interval '.SCORE_MONTHS.' month order by abs(score-'.intval($score).') asc limit '.NEAREST_SCORES);
 			$counter=0;
 			while($row=$res->fetch_assoc())
 			{
@@ -112,6 +101,10 @@
 					}
 				}
 				unset($rec);
+			}
+			if (isset($_REQUEST['d']))
+			{
+				print_r($scores);
 			}
 		}
 	
