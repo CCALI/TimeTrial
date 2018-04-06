@@ -34,23 +34,19 @@
 		require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
 		
 		//Load Drupal
-		// Minimum bootstrap to get user's session info is DRUPAL_BOOTSTRAP_SESSION.
 		drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
-		
 		//Full load not needed for just user info
-		//drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+
 		
 		// Output user id so the game can do auto save score without login prompts.
 		$result['userid']=$user->uid;//echo "\nvar userid=".$user->uid.";\n";
 		$result['username']=$user->name;//echo "\nvar username=".json_encode($user->name).";\n";
-		// echo "\nvar usermail=".json_encode($user->mail).";\n";
 		// Can also get CALI Staff, facstaff, student roles here.
-		//var_dump($user);
+		if (isset($_REQUEST['d']))
+		{
+			var_dump($result);
+		}
 	}
-	
-	// DEBUG TEST fake user id when Drupal DB not accessible for testing.
-	//$result['userid']=203;
-	//
 	
 	$score = intval($_REQUEST['s']);
 	
