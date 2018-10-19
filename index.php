@@ -53,7 +53,7 @@ $card = $_GET['card'];
         <div class="item active">
            
           <div class="carousel-banner">
-                 <a href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"><img class="img-responsive" src="assets/img/TTbanner.jpg" alt="Banner" /></a>
+                 <a href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"></a>
             </div>
           <div class="container">
             <div class="carousel-caption">
@@ -67,7 +67,7 @@ $card = $_GET['card'];
         <div class="item">
           
          <div class="carousel-banner">
-                  <a href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"><img class="img-responsive" src="assets/img/TTbanner.jpg" alt="Banner" /></a>
+                  <a href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"></a>
             </div>
           <div class="container">
             <div class="carousel-caption">
@@ -82,7 +82,7 @@ $card = $_GET['card'];
         <div class="item">
           
           <div class="carousel-banner">
-                  <a href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"><img class="img-responsive" src="assets/img/TTbanner.jpg" alt="Banner" /></a>
+                  <a href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"></a>
             </div>
           <div class="container">
             <div class="carousel-caption">
