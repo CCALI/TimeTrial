@@ -16,7 +16,7 @@ The card data contains the following columns: `ID`, `Title`, `Series`, `Text`, `
 `ID` is the original unique card number used on the printed cards. 
 All cards have a `Date1` field to determine the correct card ordering in the timeline. 
 `Series` is the type of card. This determines which of the subsequent fields are used. 
-`Series` types include `Amendment`, `Justice`, `SCt Case`, `Public Law`, `People`, `Documents`, `Treatises`, and `Decade`.
+`Series` types include `Amendment`, `Justice`, `SCt Case`, `Public Law`, `People`, `Documents`, `Treatises`, and `Decades`.
 
 ### Amendment
 * `Title`: Amendment name
@@ -42,7 +42,7 @@ All cards have a `Date1` field to determine the correct card ordering in the tim
 * `Title`: public law 
 * `Text`: description
 * `Date1`: publication year
-### Decade
+### Decades
 * `Title`: decade 
 * `Text`: description
 * `Date1`: first year of decade
