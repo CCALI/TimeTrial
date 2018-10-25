@@ -1,7 +1,7 @@
 <?php
-	// Configuration to run on local, development.cali.org and www.cali.org.
+	// Configuration to run with Drupal and track scores.
 
-	define('DRUPAL_ROOT_DIR','/vol/data/drupal7-cali');
+	define('DRUPAL_ROOT_DIR','/path/to/your/drupal');
 	$mysqli = new mysqli("s","u","p","timetrial");
 	
 ?>
