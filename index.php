@@ -50,7 +50,7 @@ $card = $_GET['card'];
         <li data-target="#myCarousel" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
-        <div class="item active">
+        <div class="item">
            
           <div class="carousel-banner">
                  <a href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"></a>
@@ -79,7 +79,7 @@ $card = $_GET['card'];
             </div>
           </div>
         </div>
-        <div class="item">
+        <div class="item active">
           
           <div class="carousel-banner">
                   <a href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"></a>
