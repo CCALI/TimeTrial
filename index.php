@@ -67,7 +67,7 @@ $card = $_GET['card'];
         <div class="item">
           
          <div class="carousel-banner">
-                  <a href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"></a>
+                  <a href="/timetrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"></a>
             </div>
           <div class="container">
             <div class="carousel-caption">
@@ -82,7 +82,7 @@ $card = $_GET['card'];
         <div class="item active">
           
           <div class="carousel-banner">
-                  <a href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"></a>
+                  <a href="/timetrial/js/CALITimeTrial.php?card=<?php echo $card; ?>"></a>
             </div>
           <div class="container">
             <div class="carousel-caption">
@@ -90,7 +90,7 @@ $card = $_GET['card'];
                   Because sometimes you just need a break. </h1>
               <p> CALI Time Trial is the card game that challenges your knowledge of legal history. Draw a card and fit it into the time line based on the
                   information on the card. How much do you know about NLRB vs. Jones & Laughlin Steel Corp.?  </p>
-              <p><a class="btn btn-large btn-primary" href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>">Play Now!</a></p>
+              <p><a class="btn btn-large btn-primary" href="/timetrial/js/CALITimeTrial.php?card=<?php echo $card; ?>">Play Now!</a></p>
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@ $card = $_GET['card'];
             information on the card. <br />
             Sound easy? <br />
             How much do you know about NLRB vs. Jones & Laughlin Steel Corp.? </p>
-            <p class="lead"><a href="/TimeTrial/js/CALITimeTrial.php?card=<?php echo $card; ?>" class="bigbtn">Play Online Now!</a></p>
+            <p class="lead"><a href="/timetrial/js/CALITimeTrial.php?card=<?php echo $card; ?>" class="bigbtn">Play Online Now!</a></p>
             <hr class="soften">
       </div>
     <div class="row">
@@ -168,7 +168,7 @@ $card = $_GET['card'];
       
     </div>
     <div class="row-fluid copyright">
-      <div class="span12">Copyright &copy; 2013 Center for Computer-Assisted Legal Instruction</div>
+      <div class="span12">Copyright &copy; 2020 Center for Computer-Assisted Legal Instruction</div>
     </div>
   </div>
 </footer>
