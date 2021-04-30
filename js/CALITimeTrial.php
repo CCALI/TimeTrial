@@ -482,7 +482,7 @@ function interval()
 	}
 	echo 'var cards=['.$jsdata."];\n";
 	
-	echo 'var QRCodeCard='.intval($_GET['card']).';';
+	echo 'var QRCodeCard='.intval(isset($_GET['card'])?$_GET['card']:0).';';
 ?>
 
 ncards=cards.length;
