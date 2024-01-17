@@ -25,13 +25,13 @@ $card = $_GET['card'];
     	      <span class="icon-bar"></span>
     	      <span class="icon-bar"></span>
     	    </button>
-            <a class="navbar-brand" href="#">CALI Time Trial</a>
+            <a class="navbar-brand" href="#">CALI Time Trial<sup>&reg;</sup></a>
             <div class="nav-collapse collapse">
               <ul class="nav navbar-nav">
                 <li><a href="http://www.cali.org/">CALI</a> </li>
                 <li><a href="http://www.cali.org/lesson"> Lessons </a></li>
                 <li><a href="http://elangdell.cali.org/"> eLangdell </a></li>
-                <li><a href="http://www.cali.org/timetrial/js/CALITimeTrial.php"> Time Trial </a></li>
+                <li><a href="http://www.cali.org/timetrial/js/CALITimeTrial.php"> Time Trial<sup>&reg;</sup> </a></li>
                 <li><a href="http://spotlight.cali.org/"> Blog </b></a></li>
               </ul>
             </div>
@@ -86,7 +86,7 @@ $card = $_GET['card'];
             </div>
           <div class="container">
             <div class="carousel-caption">
-              <h1> CALI<sup>&reg;</sup> Time Trial<br />
+              <h1> CALI<sup>&reg;</sup> Time Trial<sup>&reg;</sup><br />
                   Because sometimes you just need a break. </h1>
               <p> CALI Time Trial is the card game that challenges your knowledge of legal history. Draw a card and fit it into the time line based on the
                   information on the card. How much do you know about NLRB vs. Jones & Laughlin Steel Corp.?  </p>
@@ -101,7 +101,7 @@ $card = $_GET['card'];
 
 <div class="container marketing">
       <div class="text-center">
-            <h1> Introducing<br />CALI Time Trial!</h1>
+            <h1> Introducing<br />CALI Time Trial<sup>&reg;</sup>!</h1>
               
             <p class="lead"> CALI Time Trial is the card game that challenges your knowledge of legal history. Draw a card and fit it into the time line based on the
             information on the card. <br />
